@@ -6,7 +6,7 @@
  * @package Bean Plugins
  * @subpackage PricingTables
  * @author ThemeBeans
- * @since Bean Framework 3.0
+ * @since PricingTables 1.0
  */
  
  
