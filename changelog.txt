@@ -1,0 +1,9 @@
+JAN 1 2014 - Version 1.1
+<ul>
+<li>Added a Plugin Updater. Nice!</li>
+</ul>
+
+DEC 12 2013 - Version 1.0
+<ul>
+<li>Initial Release</li>
+</ul>
