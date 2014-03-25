@@ -3,7 +3,7 @@
  * Plugin Name: Bean Pricing Tables
  * Plugin URI: http://themebeans.com/plugin/bean-pricing-tables/?ref=plugin_bean_pricing
  * Description: Enables shortcode pricing tables to be added to your theme.
- * Version: 1.1
+ * Version: 1.2.1
  * Author: ThemeBeans
  * Author URI: http://themebeans.com/?ref=plugin_bean_pricing
  *
@@ -28,37 +28,71 @@ if ( !function_exists( 'add_action' ) )
 
 
 
-
 /*===================================================================*/
-/* PLUGIN UPDATER
+/*
+/* PLUGIN UPDATER FUNCTIONALITY
+/*
 /*===================================================================*/
-//CONSTANTS
-define( 'BEANPRICINGTABLES_EDD_TB_URL', 'http://themebeans.com' );
-define( 'BEANPRICINGTABLES_EDD_TB_NAME', 'Bean Pricing Tables' );
+define( 'EDD_BEANPRICINGTABLES_TB_URL', 'http://themebeans.com' );
+define( 'EDD_BEANPRICINGTABLES_NAME', 'Bean Pricing Tables' );
 
-//INCLUDE UPDATER
-if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
+//LOAD UPDATER CLASS
+if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) 
+{
 	include( dirname( __FILE__ ) . '/updates/EDD_SL_Plugin_Updater.php' );
 }
-
-include( dirname( __FILE__ ) . '/updates/EDD_SL_Setup.php' );
-
-//LICENSE KEY
-$license_key = trim( get_option( 'edd_beanpricingtables_license_key' ) );
-
-//CURRENT BUILD
-$edd_updater = new EDD_SL_Plugin_Updater( BEANPRICINGTABLES_EDD_TB_URL, __FILE__, array(
-		'version' 	=> '1.3',
-		'license' 	=> $license_key,
-		'item_name' => BEANPRICINGTABLES_EDD_TB_NAME,
-		'author' 	=> 'ThemeBeans'
-	)
-);
+//INCLUDE UPDATER SETUP
+include( dirname( __FILE__ ) . '/updates/EDD_SL_Activation.php' );
 
 
+/*===================================================================*/
+/* UPDATER SETUP
+/*===================================================================*/
+function beanpricingtables_license_setup() 
+{
+	add_option( 'edd_beanpricingtables_activate_license', 'BEANPRICINGTABLES' );
+	add_option( 'edd_beanpricingtables_license_status' );
+}
+add_action( 'init', 'beanpricingtables_license_setup' );
+
+function edd_beanpricingtables_plugin_updater() 
+{
+	//RETRIEVE LICENSE KEY
+	$license_key = trim( get_option( 'edd_beanpricingtables_activate_license' ) );
+
+	$edd_updater = new EDD_SL_Plugin_Updater( EDD_BEANPRICINGTABLES_TB_URL, __FILE__, array( 
+			'version' 	=> '1.2.1',
+			'license' 	=> $license_key,
+			'item_name' => EDD_BEANPRICINGTABLES_NAME,
+			'author' 	=> 'Rich Tabor / ThemeBeans'
+		)
+	);
+}
+add_action( 'admin_init', 'edd_beanpricingtables_plugin_updater' );
+
+
+/*===================================================================*/
+/* DEACTIVATION HOOK - REMOVE OPTION
+/*===================================================================*/
+function beanpricingtables_deactivate() 
+{
+	delete_option( 'edd_beanpricingtables_activate_license' );
+	delete_option( 'edd_beanpricingtables_license_status' );
+}
+register_deactivation_hook( __FILE__, 'beanpricingtables_deactivate' );
 
 
 
+
+
+
+
+
+/*===================================================================*/
+/*
+/* BEGIN BEAN PRICING TABLES PLUGIN
+/*
+/*===================================================================*/
 /*===================================================================*/
 /*	PLUGIN CLASS
 /*===================================================================*/
@@ -173,48 +207,3 @@ if ( ! class_exists( 'Bean_BeanPricingTables' ) ) :
 	new Bean_BeanPricingTables;
 
 endif; //END class Bean_BeanPricingTables
-
-
-
-
-/*===================================================================*/
-/* ADMIN PAGE FOR LICENSE ENTRY
-/*===================================================================*/
-//MENU LINK
-function bean_pricingtables_admin_menu() {
-	add_options_page(
-		__('Bean Pricing Tables', 'bean'), __('Bean Pricing Tables', 'bean'), 'manage_options', 'bean_pricingtables', 'bean_pricingtables_admin_page');
-}
-add_action('admin_menu', 'bean_pricingtables_admin_menu');
-
-//PRINT PAGE
-function bean_pricingtables_admin_page()
-{
-	$license = get_option( 'edd_beanpricingtables_license_key' );
-	$status = get_option( 'edd_beanpricingtables_license_status' );
-	?>
-		<div class="wrap">
-		<h2><?php echo esc_html__('Bean Pricing Tables Plugin', 'bean'); ?></h2>
-		<p>This plugin allows you to display one, two, and three column responsive pricing tables via a shortcode generator on the WordPress Visual Editor. If you like this plugin, consider checking out our other <a href="http://themebeans.com/plugins/?ref=bean_pricingtables" target="blank">Free Plugins</a> and our <a href="http://themebeans.com/themes/?ref=bean_pricingtables" target="blank">Premium WordPress Themes</a>. Cheers!</p><br />
-
-		<h4 style="font-size: 15px; font-weight: 600; color: #222; margin-bottom: 10px;"><?php _e('Activate License'); ?></h4>
-		<p>Enter the license key <code style="padding: 1px 5px 2px; background-color: #FFF; border-radius: 2px; font-weight: bold; font-family: 'Open Sans',sans-serif;">BEANPRICINGTABLES</code>, hit Save, then Activate, to turn on the plugin updater. You'll then be able to update this plugin from your Plugins Dashboard when future updates are available.</p>
-
-		<form method="post" action="options.php">
-			<?php settings_fields('edd_beanpricingtables_license'); ?>
-			<input id="edd_beanpricingtables_license_key" name="edd_beanpricingtables_license_key" type="text" class="regular-text" value="<?php esc_attr_e( $license ); ?>" />
-				<?php if( $status !== false && $status == 'valid' ) { ?>
-					<?php wp_nonce_field( 'edd_beanpricingtables_nonce', 'edd_beanpricingtables_nonce' ); ?>
-					<input type="submit" class="button-secondary" name="edd_beanpricingtables_license_deactivate" style="outline: none!important;" value="<?php _e('Deactivate License'); ?>"/>
-					<span style="color: #7AD03A;"><?php _e('&nbsp;&nbsp;Good to go!'); ?></span>
-				<?php } else {
-					wp_nonce_field( 'edd_beanpricingtables_nonce', 'edd_beanpricingtables_nonce' ); ?>
-					<input type="submit" name="submit" id="submit" class="button button-secondary" value="Save License Key">
-					<input type="submit" class="button-secondary" name="edd_beanpricingtables_license_activate" style="outline: none!important;" value="<?php _e('Activate License'); ?>"/>
-					<span style="color: #DD3D36;"><?php _e('&nbsp;&nbsp;Inactive'); ?></span>
-				<?php } ?>
-		</form>
-    </div>
-    <?php
-} //END function bean_pricingtables_admin_page()
-?>
