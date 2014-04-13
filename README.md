@@ -2,7 +2,7 @@
 
 [Bean Pricing Tables](http://themebeans.com/plugin/bean-pricing-tables/) is a WordPress plugin by [ThemeBeans](http://themebeans.com) that adds a [shortcode](https://codex.wordpress.org/Shortcode) for displaying pricing tables on your posts and pages.
 
-The shortcode can be used to display 1 column, 2 column, or 3 column responsive pricing tables. The plugin installs a shortcode generator on the [tinymce](https://codex.wordpress.org/TinyMCE) panel as well.
+The shortcode can be used to display 1 column, 2 column, or 3 column responsive pricing tables. The plugin installs a shortcode generator on the [TinyMCE](https://codex.wordpress.org/TinyMCE) panel as well.
 
 For more information, check out the [plugin page](http://themebeans.com/plugin/bean-pricing-tables/).
 
