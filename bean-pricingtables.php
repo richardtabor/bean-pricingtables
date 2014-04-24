@@ -219,7 +219,12 @@ if ( ! class_exists( 'Bean_BeanPricingTables' ) ) :
 		/*===================================================================*/
 		function add_rich_plugins( $plugin_array )
 		{
-			$plugin_array['BeanPricingTables'] = $this->BEAN_TINYMCE_URI . '/plugin.js';
+            if ( version_compare( get_bloginfo('version'), '3.9', '>=' ) ) {
+                $plugin_array['BeanPricingTables'] = $this->BEAN_TINYMCE_URI . '/plugin.js';
+            } else {
+                $plugin_array['BeanPricingTables'] = $this->BEAN_TINYMCE_URI . '/plugin-pre3.9.js';
+            }
+
 			return $plugin_array;
 		}
 
