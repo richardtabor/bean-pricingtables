@@ -11,7 +11,7 @@
 
 				//CREATE THE BUTTON
 				var btn = e.createSplitButton('bean_pricingtable_button', {
-                    title: "Insert Bean Pricing Table",
+                    title: "Bean Pricing Tables",
                 });
 
 				//RENDER A DROPDOWN MENU

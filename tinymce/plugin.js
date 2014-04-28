@@ -5,7 +5,7 @@
         //CREATE THE BUTTON
         editor.addButton('bean_pricingtable_button', {
             type: "splitbutton",
-            title: "Insert Bean Pricing Table", //BUTTON TITLE
+            title: "Bean Pricing Tables", //BUTTON TITLE
             menu: [
                  createSubmenuButtonImmediate( "Pricing Table, 1 Column",
                     '[pricing_table columns="1"][pricing_column highlight="true"][price_info title="Free" cost="Zero dollars." url="http://themebeans.com" highlighted="Most Popular"]This is a quick description or something of the free package.[/price_info]<ul><li class="info" title="An incredibly intuitive pricing tables plugin. Generated via shortcodes so its nice and easy.">Bean Pricing Tables</li><li class="info" title="This is an additional info hover. Simply add the info class, and a title to your list item.">List Hover Example</li><li class="info" title="Just surround your text in a span HTML element to highlight elements"><span>32GB</span> of Free Space</li><li>Completely Editable</li><li>Mobile Ready</li></ul>[/pricing_column][/pricing_table]' 
