@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Bean Pricing Tables
- * Plugin URI: http://themebeans.com/plugin/bean-pricing-tables/?ref=plugin_bean_pricing
+ * Plugin URI: http://themebeans.com/plugins/bean-pricing-tables
  * Description: Enables shortcode pricing tables to be added to your theme.
- * Version: 1.3
+ * Version: 1.3.1
  * Author: ThemeBeans
- * Author URI: http://themebeans.com/?ref=plugin_bean_pricing
+ * Author URI: http://themebeans.com
  *
  *
  * @package Bean Plugins
